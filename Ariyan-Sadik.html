@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝙇𝙀𝘼𝘿𝙀𝙍 𝘼𝙍𝙄𝙔𝘼𝙉 𝙎𝘼𝘿𝙄𝙆</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            /* Animated Gradient Background */
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #1e293b);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        /* Glass morphism effect for card */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        /* Premium gradient border */
+        .premium-border {
+            position: relative;
+            border-radius: 24px;
+            padding: 3px;
+            background: linear-gradient(145deg, #14b8a6, #8b5cf6, #14b8a6);
+            background-size: 200% 200%;
+            animation: border-animation 8s ease infinite;
+        }
+        
+        /* Modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1rem;
+        }
+        
+        /* Modal content - made more compact */
+        .modal-content {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            border-radius: 16px;
+            max-width: 420px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Modal header - smaller */
+        .modal-header {
+            background: linear-gradient(90deg, #8b5cf6, #14b8a6);
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* Modal body - more compact */
+        .modal-body {
+            padding: 1.2rem;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        /* Modal footer - smaller */
+        .modal-footer {
+            padding: 1rem;
+            display: flex;
+            gap: 0.8rem;
+            justify-content: flex-end;
+            background: rgba(15, 23, 42, 0.7);
+        }
+        
+        /* Custom focus styles for inputs */
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.4);
+            border-color: #0d9488;
+        }
+        
+        /* Animation for results */
+        .result-item {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Step progress indicator */
+        .step-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .step-progress::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .step-progress-item {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 41, 59, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .step-progress-item.active {
+            background: linear-gradient(145deg, #14b8a6, #8b5cf6);
+            border-color: transparent;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes border-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes text-glow-purple {
+            0%, 100% { text-shadow: 0 0 8px rgba(192, 132, 252, 0.6), 0 0 20px rgba(192, 132, 252, 0.4); }
+            50% { text-shadow: 0 0 12px rgba(192, 132, 252, 0.8), 0 0 30px rgba(192, 132, 252, 0.6); }
+        }
+
+        @keyframes text-glow-teal {
+            0%, 100% { text-shadow: 0 0 10px rgba(45, 212, 191, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(45, 212, 191, 0.7); }
+        }
+
+        .animate-text-glow-purple {
+            animation: text-glow-purple 4s ease-in-out infinite;
+        }
+        
+        .animate-text-glow-teal {
+            animation: text-glow-teal 4s ease-in-out infinite;
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(145deg, #14b8a6, #8b5cf6);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Dialog Modal -->
+    <div id="welcomeModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-lg font-bold text-white">🥀✨ VIP সিগন্যাল নোটিশ ✨🥀</h3>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3">আসসালামু আলাইকুম 🌺</p>
+                <p class="mb-3">VIP সিগন্যাল গ্রুপে জয়েন হতে চাইলে দারুণ সুযোগ ✅</p>
+                
+                <ul class="mb-3 space-y-1">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-teal-400 mt-1 mr-2 text-xs"></i>
+                        <span class="text-sm">মাত্র ৫ স্টেপে সিগন্যাল নিন</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-teal-400 mt-1 mr-2 text-xs"></i>
+                        <span class="text-sm">প্রফেশনাল সিগন্যাল পান</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-teal-400 mt-1 mr-2 text-xs"></i>
+                        <span class="text-sm">প্রতিদিন ইনকামের সুযোগ 💰</span>
+                    </li>
+                </ul>
+                
+                <p class="mb-2 text-sm">⚡ এখনই ইনবক্স করুন —</p>
+                <p class="mb-2 text-teal-300 text-sm font-semibold">VIP সিগন্যাল = ইনকামের নতুন দরজা 🚪</p>
+                <p class="text-rose-400 text-sm font-bold">সিট সীমিত, দেরি না করুন!</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelBtn" class="px-4 py-1.5 text-sm bg-slate-700 hover:bg-slate-600 text-white rounded transition duration-300">
+                    Cancel
+                </button>
+                <button id="joinBtn" class="px-4 py-1.5 text-sm bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white rounded transition duration-300">
+                    Join VIP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Calculator Content -->
+    <div class="premium-border w-full max-w-md mx-auto">
+        <div class="glass-card p-6 md:p-8">
+            
+            <!-- Header Section -->
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center p-2 bg-gradient-to-r from-violet-600 to-teal-500 rounded-full mb-3 animate-float">
+                    <i class="fas fa-calculator text-white text-xl"></i>
+                </div>
+                <h2 class="animate-text-glow-purple text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400 mb-1">
+                    𝙇𝙀𝘼𝘿𝙀𝙍 𝘼𝙍𝙄𝙔𝘼𝙉 𝙎𝘼𝘿𝙄𝙆
+                </h2>
+                <p class="animate-text-glow-teal text-xs text-teal-300 tracking-wider">
+                    স্টেপ মেকার ক্যালকুলেটর
+                </p>
+            </div>
+            
+            <!-- Step Progress Indicator -->
+            <div class="step-progress">
+                <div class="step-progress-item active">
+                    <i class="fas fa-dollar-sign text-teal-400 text-xs"></i>
+                </div>
+                <div class="step-progress-item">
+                    <i class="fas fa-stairs text-purple-400 text-xs"></i>
+                </div>
+                <div class="step-progress-item">
+                    <i class="fas fa-chart-line text-blue-400 text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <div class="space-y-4">
+                <div>
+                    <label for="balance" class="block text-xs font-medium text-slate-300 mb-1 flex items-center">
+                        <i class="fas fa-wallet text-teal-400 mr-1 text-xs"></i>
+                        মোট টাকা (৳)
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="balance" class="form-input w-full pl-8 pr-3 py-2 text-sm bg-slate-700/50 border-2 border-slate-600 rounded-lg text-white transition duration-300" placeholder="টাকার পরিমাণ লিখুন" value="300" min="1">
+                        <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                            <i class="fas fa-taka-sign text-slate-400 text-xs"></i>
+                        </div>
+                    </div>
+                    <div id="balanceError" class="text-red-500 text-xs mt-1 h-4"></div>
+                </div>
+                
+                <div>
+                    <label for="steps" class="block text-xs font-medium text-slate-300 mb-1 flex items-center">
+                        <i class="fas fa-layer-group text-purple-400 mr-1 text-xs"></i>
+                        স্টেপ সংখ্যা
+                    </label>
+                    <div class="relative">
+                        <input type="number" id="steps" class="form-input w-full pl-8 pr-3 py-2 text-sm bg-slate-700/50 border-2 border-slate-600 rounded-lg text-white transition duration-300" placeholder="স্টেপ সংখ্যা লিখুন" value="5" min="1">
+                        <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                            <i class="fas fa-stairs text-slate-400 text-xs"></i>
+                        </div>
+                    </div>
+                    <div id="stepsError" class="text-red-500 text-xs mt-1 h-4"></div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <button onclick="calculateSteps()" class="w-full bg-gradient-to-r from-teal-500 to-purple-500 hover:from-teal-600 hover:to-purple-600 text-white font-bold py-2 px-4 rounded-lg mt-4 shadow-lg hover:shadow-teal-500/30 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center text-sm">
+                <i class="fas fa-calculator mr-1 text-xs"></i>
+                স্টেপ তৈরি করুন
+            </button>
+            
+            <!-- Results Section -->
+            <div id="results" class="mt-6" style="display: none;">
+                <h2 class="text-lg font-semibold text-slate-200 border-b-2 border-slate-700 pb-2 mb-3 flex items-center">
+                    <i class="fas fa-chart-pie text-teal-400 mr-1 text-sm"></i>
+                    ফলাফল
+                </h2>
+                <div id="stepResults" class="space-y-2 max-h-60 overflow-y-auto pr-2">
+                    <!-- Step results will be injected here -->
+                </div>
+                <div id="totalUsed" class="text-md font-bold text-green-400 mt-4 pt-2 border-t-2 border-dashed border-slate-600 text-sm">
+                    <!-- Total will be injected here -->
+                </div>
+                <!-- Download Button Container -->
+                <div id="downloadContainer" class="mt-4">
+                     <button onclick="downloadResults()" class="w-full flex items-center justify-center gap-1 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-2 px-3 rounded-lg shadow-lg hover:shadow-indigo-500/40 transform hover:-translate-y-0.5 transition-all duration-300 text-sm">
+                        <i class="fas fa-download text-xs"></i>
+                        <span>ফলাফল ডাউনলোড করুন</span>
+                    </button>
+                </div>
+            </div>
+
+             <!-- Telegram Buttons Section -->
+            <div class="mt-6 pt-4 border-t border-slate-700">
+                <h3 class="text-center text-slate-400 font-semibold mb-3 flex items-center justify-center text-sm">
+                    <i class="fas fa-users mr-1 text-xs"></i>
+                    আমাদের সাথে যুক্ত হন
+                </h3>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <!-- Telegram Channel Button -->
+                    <a href="https://t.me/DKWIN_464" target="_blank" class="group flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-600 hover:to-cyan-500 text-white font-bold py-2 px-3 rounded-lg shadow-lg hover:shadow-cyan-500/50 transform hover:-translate-y-1 transition-all duration-300 text-xs">
+                        <i class="fab fa-telegram-plane group-hover:scale-110 transition-transform text-xs"></i>
+                        <span class="track-wide">চ্যানেলে যোগ দিন</span>
+                    </a>
+                    <!-- Contact Admin Button -->
+                    <a href="https://t.me/SADIK_KHAN33" target="_blank" class="group flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-r from-slate-600 to-gray-700 hover:from-slate-700 hover:to-gray-800 text-white font-bold py-2 px-3 rounded-lg shadow-lg hover:shadow-gray-700/50 transform hover:-translate-y-1 transition-all duration-300 text-xs">
+                         <i class="fas fa-headset group-hover:scale-110 transition-transform text-xs"></i>
+                        <span class="track-wide">অ্যাডমিনের সাথে যোগাযোগ</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="mt-6 pt-3 text-center text-slate-500 text-xs border-t border-slate-700">
+                <p>© 2025 𝘼𝙍𝙄𝙔𝘼𝙉 𝙎𝘼𝘿𝙄𝙆</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Store step values globally to be accessible by the download function
+        let calculatedStepValues = [];
+        
+        // Modal functionality
+        const welcomeModal = document.getElementById('welcomeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const joinBtn = document.getElementById('joinBtn');
+        
+        // Show modal on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            welcomeModal.style.display = 'flex';
+        });
+        
+        // Close modal when cancel button is clicked
+        cancelBtn.addEventListener('click', function() {
+            welcomeModal.style.display = 'none';
+        });
+        
+        // Open Telegram link when join button is clicked
+        joinBtn.addEventListener('click', function() {
+            window.open('https://t.me/DKWIN_464', '_blank');
+            welcomeModal.style.display = 'none';
+        });
+        
+        // Close modal if user clicks outside the modal content
+        welcomeModal.addEventListener('click', function(e) {
+            if (e.target === welcomeModal) {
+                welcomeModal.style.display = 'none';
+            }
+        });
+
+        function calculateSteps() {
+            // Update progress indicator
+            document.querySelectorAll('.step-progress-item').forEach((item, index) => {
+                if (index < 2) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Clear previous errors
+            document.getElementById('balanceError').textContent = '';
+            document.getElementById('stepsError').textContent = '';
+            
+            const balanceInput = document.getElementById('balance');
+            const stepsInput = document.getElementById('steps');
+            
+            const balance = parseFloat(balanceInput.value);
+            const steps = parseInt(stepsInput.value);
+            
+            // --- Validation ---
+            let isValid = true;
+            if (isNaN(balance) || balance <= 0) {
+                document.getElementById('balanceError').textContent = 'অনুগ্রহ করে সঠিক পরিমাণ লিখুন।';
+                balanceInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                 balanceInput.classList.remove('border-red-500');
+            }
+
+            if (isNaN(steps) || steps <= 0) {
+                document.getElementById('stepsError').textContent = 'অনুগ্রহ করে সঠিক স্টেপ সংখ্যা লিখুন।';
+                stepsInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                stepsInput.classList.remove('border-red-500');
+            }
+
+            if (!isValid) {
+                document.getElementById('results').style.display = 'none';
+                return;
+            };
+            
+            // --- Calculation ---
+            const denominator = Math.pow(2, steps) - 1;
+            const firstStep = balance / denominator;
+            
+            let stepValues = [];
+            let currentStepValue = firstStep;
+            let totalCalculated = 0;
+            
+            for (let i = 0; i < steps; i++) {
+                const roundedValue = parseFloat(currentStepValue.toFixed(2));
+                stepValues.push(roundedValue);
+                totalCalculated += roundedValue;
+                currentStepValue *= 2;
+            }
+            
+            const roundingDifference = balance - totalCalculated;
+            stepValues[steps - 1] = parseFloat((stepValues[steps - 1] + roundingDifference).toFixed(2));
+            
+            // Store for download
+            calculatedStepValues = [...stepValues];
+
+            // --- Display Results ---
+            const stepResultsDiv = document.getElementById('stepResults');
+            const resultsContainer = document.getElementById('results');
+            
+            stepResultsDiv.innerHTML = '';
+            
+            calculatedStepValues.forEach((value, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'result-item flex justify-between items-center bg-slate-700/60 p-2 rounded-md text-sm';
+                stepDiv.style.animationDelay = `${index * 100}ms`;
+                
+                // Add icon based on step number
+                let stepIcon = '';
+                if (index === 0) stepIcon = '<i class="fas fa-1 text-blue-400 mr-1 text-xs"></i>';
+                else if (index === 1) stepIcon = '<i class="fas fa-2 text-purple-400 mr-1 text-xs"></i>';
+                else if (index === 2) stepIcon = '<i class="fas fa-3 text-teal-400 mr-1 text-xs"></i>';
+                else stepIcon = '<i class="fas fa-star text-yellow-400 mr-1 text-xs"></i>';
+                
+                stepDiv.innerHTML = `
+                    <span class="text-slate-300 font-medium flex items-center">${stepIcon}স্টেপ ${index + 1}</span>
+                    <span class="font-bold text-teal-400">${value.toFixed(2)} ৳</span>
+                `;
+                stepResultsDiv.appendChild(stepDiv);
+            });
+            
+            document.getElementById('totalUsed').innerHTML = `
+                <i class="fas fa-check-circle text-green-400 mr-1 text-sm"></i>
+                মোট ব্যবহৃত: ${balance.toFixed(2)} ৳
+            `;
+            
+            // Show results with animation
+            resultsContainer.style.display = 'block';
+            
+            // Complete progress indicator
+            document.querySelectorAll('.step-progress-item').forEach((item) => {
+                item.classList.add('active');
+            });
+        }
+
+        function downloadResults() {
+            if (calculatedStepValues.length === 0) {
+                alert("প্রথমে স্টেপ তৈরি করুন!");
+                return;
+            }
+
+            const balance = parseFloat(document.getElementById('balance').value);
+            const steps = parseInt(document.getElementById('steps').value);
+
+            // --- Create Text Content ---
+            let fileContent = "𝙇𝙀𝘼𝘿𝙀𝙍 𝘼𝙍𝙄𝙔𝘼𝙉 𝙎𝘼𝘿𝙄𝙆\n";
+            fileContent += "=================================\n\n";
+            fileContent += `মোট টাকা: ${balance.toFixed(2)} ৳\n`;
+            fileContent += `স্টেপ সংখ্যা: ${steps}\n`;
+            fileContent += "---------------------------------\n\n";
+
+            calculatedStepValues.forEach((value, index) => {
+                fileContent += `স্টেপ ${index + 1}: ${value.toFixed(2)} ৳\n`;
+            });
+
+            fileContent += "\n---------------------------------\n";
+            fileContent += `মোট ব্যবহৃত: ${balance.toFixed(2)} ৳\n`;
+            fileContent += "\n=================================\n";
+            fileContent += "Generated by: 𝘼𝙍𝙄𝙔𝘼𝙉 𝙎𝘼𝘿𝙄𝙆 Step Calculator\n";
+
+            // --- Create and Trigger Download ---
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            
+            a.href = url;
+            a.download = 'Step_Maker_Results.txt';
+            document.body.appendChild(a);
+            a.click();
+            
+            // Clean up
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Calculate initial example on page load
+        window.onload = function() {
+            calculateSteps();
+        };
+    </script>
+
+</body>
+</html>
